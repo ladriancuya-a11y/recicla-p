@@ -1,0 +1,63 @@
+name: Flutter iOS Build (Unsigned IPA)
+
+on:
+  push:
+    branches: 
+      - "main"
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build-ios-unsigned:
+    name: Build Unsigned iOS IPA
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Install iOS Pods
+        run: |
+          cd ios
+          pod install
+
+      # Here is the magic: We bypass 'flutter build ios' and use xcodebuild directly.
+      # By passing a custom derivedDataPath, we know exactly where the compiled .app will go.
+      - name: Compile iOS using xcodebuild (Forced Unsigned)
+        run: |
+          cd ios
+          xcodebuild build \
+            -workspace Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath ../build/ios_xcode \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            EXPANDED_CODE_SIGN_IDENTITY=""
+
+      # The compiled app is now located in our custom derived data folder.
+      # We package it into the standard IPA format (a zipped Payload folder).
+      - name: Package into IPA
+        run: |
+          mkdir -p build/ipa_output/Payload
+          # Copy the .app file into the Payload folder
+          cp -r build/ios_xcode/Build/Products/Release-iphoneos/Runner.app build/ipa_output/Payload/
+          # Zip it into an .ipa
+          cd build/ipa_output
+          zip -qq -r unsigned-release.ipa Payload
+
+      - name: Upload Unsigned IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-unsigned-ipa
+          path: build/ipa_output/unsigned-release.ipa
+          retention-days: 14
