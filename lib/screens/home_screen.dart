@@ -5,6 +5,7 @@ import '../theme/app_theme.dart';
 import '../widgets/recicla_logo.dart';
 import '../widgets/common_widgets.dart';
 import '../models/models.dart';
+import '../widgets/smart_bin_card.dart';
 import 'education_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -55,6 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               _buildHeroCard(provider),
               const SizedBox(height: 24),
+              // ── Tarjeta del Tacho Inteligente BLE ──────────────────
+              const SmartBinCard(),
+              const SizedBox(height: 24),
+              // ────────────────────────────────────────────────────────
               _buildStatsRow(provider),
               const SizedBox(height: 24),
               _buildQuickActions(context, provider),

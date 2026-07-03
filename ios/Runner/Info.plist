@@ -45,5 +45,25 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- ============================================================ -->
+	<!-- PERMISOS BLUETOOTH LOW ENERGY (BLE) — flutter_blue_plus     -->
+	<!-- Requeridos en iOS 13+ para usar Core Bluetooth               -->
+	<!-- ============================================================ -->
+
+	<!-- Descripción para el diálogo de permiso de Bluetooth          -->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>RECICLA-P necesita Bluetooth para conectarse al tacho inteligente ESP32 y leer su nivel de llenado en tiempo real.</string>
+
+	<!-- Compatibilidad iOS 12 e inferiores (deprecado pero recomendado) -->
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>RECICLA-P necesita Bluetooth para conectarse al sensor inteligente del tacho de reciclaje.</string>
+
+	<!-- Ubicación en segundo plano (sólo si se requiere escaneo BLE en background) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>RECICLA-P usa tu ubicación para encontrar centros de reciclaje cercanos.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>RECICLA-P usa tu ubicación para encontrar centros de reciclaje cercanos.</string>
 </dict>
 </plist>

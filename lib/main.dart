@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'theme/app_theme.dart';
 import 'providers/recicla_provider.dart';
+import 'providers/ble_provider.dart';
 import 'screens/splash_screen.dart';
 
 void main() async {
@@ -33,6 +34,7 @@ class ReciclaApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ReciclaProvider()..loadData()),
+        ChangeNotifierProvider(create: (_) => BleProvider()),
       ],
       child: MaterialApp(
         title: 'RECICLA-P',
