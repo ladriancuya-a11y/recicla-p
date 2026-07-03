@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ============================================================ -->
     <!-- PERMISOS BLUETOOTH LOW ENERGY (BLE) — flutter_blue_plus     -->
